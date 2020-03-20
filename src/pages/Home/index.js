@@ -43,7 +43,7 @@ const HomePage = ({ user, postData, setPostData }) => {
 						postData={postData}
 					/>
 
-					{postData && postData.map(post => <Post post={post} />)}
+					{postData && postData.map(post => <Post user={user} post={post} />)}
 				</div>
 			</div>
 		</div>

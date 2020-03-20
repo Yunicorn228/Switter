@@ -8,9 +8,10 @@ import eye from '../../images/eye.svg';
 import classnames from 'classnames';
 import Comment from '../../components/Comment';
 
-const Post = ({ post }) => {
+const Post = ({ post, user }) => {
 	const [showComment, setCommentShowStatus] = useState(false);
 	const [showReport, setReportShowStatus] = useState(false);
+	const [currentPost, setCurrentPost] = useState(post);
 	const reportDropdownElement = useRef(null);
 	const reportButtonElement = useRef(null);
 
@@ -84,7 +85,13 @@ const Post = ({ post }) => {
 						{post._v}
 					</div>
 				</div>
-				{showComment && <Comment comments={post.comments} />}
+				{showComment && (
+					<Comment
+						currentPost={currentPost}
+						setCurrentPost={setCurrentPost}
+						user={user}
+					/>
+				)}
 			</div>
 		</React.Fragment>
 	);

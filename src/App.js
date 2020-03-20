@@ -11,8 +11,6 @@ import postService from './services/post';
 function App() {
 	const [user, setUser] = useState({});
 	const [postData, setPostData] = useState([]);
-	console.log(user);
-	console.log(postData);
 
 	useEffect(() => {
 		const fetchUser = async () => {

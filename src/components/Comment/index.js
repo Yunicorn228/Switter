@@ -1,9 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './index.scss';
 import icon from '../../images/icon.svg';
 import classnames from 'classnames';
+import postService from '../../services/post';
 
-const Comment = ({ comments }) => {
+const Comment = ({ currentPost, setCurrentPost, user }) => {
+	const [commentInput, setCommentInput] = useState('');
+	console.log(currentPost);
+
+	const handleCommentInput = e => {
+		setCommentInput(e.target.value);
+	};
+
+	const submitComment = async e => {
+		if (e.keyCode === 13 && user._id) {
+			try {
+				const newComment = await postService.createCommentInPost(
+					user._id,
+					currentPost._id,
+					commentInput,
+				);
+				console.log('hi', newComment);
+				if (newComment.data.success) {
+					const nextPost = { ...currentPost };
+					console.log(nextPost);
+					nextPost.comments = newComment.data.data.comments;
+
+					setCurrentPost(nextPost);
+				}
+			} catch (error) {
+				alert(error.message);
+			}
+		}
+	};
+
 	return (
 		<div className={classnames('comment-container')}>
 			<div className='comment-extra'>
@@ -11,8 +41,8 @@ const Comment = ({ comments }) => {
 				<span>2 of 999+</span>
 			</div>
 
-			{comments &&
-				comments.map(comment => (
+			{currentPost.comments &&
+				currentPost.comments.map(comment => (
 					<div className='comment-comment'>
 						<div className='comment-wraper'>
 							<img src={icon} alt='' />
@@ -27,7 +57,13 @@ const Comment = ({ comments }) => {
 
 			<div className='comment-write'>
 				<img src={icon} alt='' />
-				<input placeholder='Write a comment' type='text' />
+				<input
+					value={commentInput}
+					onChange={handleCommentInput}
+					placeholder='Write a comment'
+					type='text'
+					onKeyDown={submitComment}
+				/>
 			</div>
 		</div>
 	);

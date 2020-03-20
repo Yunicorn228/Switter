@@ -11,8 +11,8 @@ const createPost = (text, mood, authorId) => {
 	return axios.post(`${url}/posts/create`, { text, mood, authorId });
 };
 
-const createCommentInPost = () => {
-	return axios.post(`${url}/posts/comment/create`);
+const createCommentInPost = (authorId, postId, text) => {
+	return axios.post(`${url}/posts/comment/create`, { authorId, postId, text });
 };
 
 const likeComment = () => {

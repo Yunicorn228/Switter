@@ -18,7 +18,6 @@ const CreatePost = ({ user, postData, setPostData }) => {
 				if (newPost.data.success && postData) {
 					const nextPosts = [...postData];
 					nextPosts.unshift(newPost.data.data);
-					console.log('llok', nextPosts);
 					setPostData(nextPosts);
 				}
 			} catch (error) {
