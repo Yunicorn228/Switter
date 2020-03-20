@@ -6,10 +6,13 @@ import ProfilePage from './pages/Profile';
 import SettingPage from './pages/Setting';
 import userService from './services/user';
 import NavBar from './components/NavBar';
+import postService from './services/post';
 
 function App() {
 	const [user, setUser] = useState({});
+	const [postData, setPostData] = useState([]);
 	console.log(user);
+	console.log(postData);
 
 	useEffect(() => {
 		const fetchUser = async () => {
@@ -17,7 +20,6 @@ function App() {
 			if (userId) {
 				try {
 					const response = await userService.findUserById(userId); // get full user data from server
-					console.log(response);
 					if (response.data.success) {
 						setUser(response.data.data);
 					}
@@ -27,6 +29,20 @@ function App() {
 			}
 		};
 		fetchUser();
+	}, []);
+
+	useEffect(() => {
+		const fetchPost = async () => {
+			try {
+				const posts = await postService.fetchAllPost();
+				if (posts) {
+					setPostData(posts.data);
+				}
+			} catch (error) {
+				alert(error.message);
+			}
+		};
+		fetchPost();
 	}, []);
 
 	return (
@@ -44,7 +60,13 @@ function App() {
 					exact
 					path='/home'
 					render={() => {
-						return <HomePage user={user} />;
+						return (
+							<HomePage
+								postData={postData}
+								setPostData={setPostData}
+								user={user}
+							/>
+						);
 					}}
 				/>
 				<Route

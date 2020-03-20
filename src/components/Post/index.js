@@ -8,7 +8,7 @@ import eye from '../../images/eye.svg';
 import classnames from 'classnames';
 import Comment from '../../components/Comment';
 
-const Post = () => {
+const Post = ({ post }) => {
 	const [showComment, setCommentShowStatus] = useState(false);
 	const [showReport, setReportShowStatus] = useState(false);
 	const reportDropdownElement = useRef(null);
@@ -53,7 +53,9 @@ const Post = () => {
 						<div className='post-block'>
 							<div className='post-sender'>
 								<div className='post-sender-name'>Sheldon Yu</div>
-								<div className='post-sender-feeling'>is feeling motivited</div>
+								<div className='post-sender-feeling'>
+									is feeling {post.mood}
+								</div>
 							</div>
 							<div className='post-time'> 7 hours ago</div>
 						</div>
@@ -66,23 +68,23 @@ const Post = () => {
 					/>
 				</div>
 
-				<div className='post-content'>Moto, moto, got alot of motivation!</div>
+				<div className='post-content'>{post.text}</div>
 
 				<div className='post-reviews'>
 					<div className='post-likes'>
 						<img src={heart} alt='' />
-						999+
+						{post.likes.length}
 					</div>
 					<div onClick={() => handleDisplayComment()} className='post-comment'>
 						<img src={commenticon} alt='' />
-						999+
+						{post.comments.length}
 					</div>
 					<div className='post-views'>
 						<img src={eye} alt='' />
-						999+
+						{post._v}
 					</div>
 				</div>
-				{showComment && <Comment />}
+				{showComment && <Comment comments={post.comments} />}
 			</div>
 		</React.Fragment>
 	);

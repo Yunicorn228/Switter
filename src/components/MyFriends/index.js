@@ -3,7 +3,6 @@ import './index.scss';
 import icon from '../../images/icon.svg';
 
 const MyFriends = ({ user }) => {
-	console.log(user.friends);
 	return (
 		<div className='myfriends-container'>
 			<div className='myfriends-title'>My Friends</div>

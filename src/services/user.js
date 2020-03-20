@@ -23,8 +23,8 @@ const findUserById = userId => {
 	return axios.get(`${url}/users/find/byId`, { params: { userId } });
 };
 
-const findStrangerByUserId = () => {
-	return axios.get(`${url}/users/strangers/byId`);
+const findStrangerByUserId = userId => {
+	return axios.get(`${url}/users/strangers/byId`, { params: { userId } });
 };
 
 const searchFriendByUser = () => {

@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom';
 import { handleSignout } from '../../helper/token';
 
 const NavBar = ({ displayBox, user }) => {
-	console.log(user);
 	const [dropDown, setDropDown] = useState(false);
 	const navDropDownElement = useRef(null);
 	const navButtonElement = useRef(null);

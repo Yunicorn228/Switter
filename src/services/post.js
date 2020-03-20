@@ -7,8 +7,8 @@ const fetchAllPost = () => {
 	return axios.get(`${url}/posts/fetch`);
 };
 
-const createPost = () => {
-	return axios.post(`${url}/posts/create`);
+const createPost = (text, mood, authorId) => {
+	return axios.post(`${url}/posts/create`, { text, mood, authorId });
 };
 
 const createCommentInPost = () => {

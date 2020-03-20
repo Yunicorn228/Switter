@@ -46,8 +46,13 @@
 		font-weight: 500;
 		font-size: 14px;
 		.createpost-post-mood {
+			padding: 10px;
+			cursor: default;
 			display: flex;
 			align-items: center;
+			&:hover {
+				color: #1f8efa;
+			}
 			img {
 				margin-right: 8px;
 			}
@@ -64,6 +69,25 @@
 		}
 		button:hover {
 			background-color: #1967b6;
+		}
+	}
+	.mood-dropdown {
+		position: absolute;
+		display: inline-block;
+		flex-direction: column;
+		z-index: 1;
+		span {
+			display: block;
+			padding: 8px 12px;
+			background-color: #f2f2f2;
+			border-bottom: 1px solid #fff;
+			&:hover {
+				color: #fff;
+				background-color: #1f8efa;
+			}
+			&:last-of-type {
+				border: none;
+			}
 		}
 	}
 }

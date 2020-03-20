@@ -1,9 +1,58 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './index.scss';
 import icon from '../../images/icon.svg';
-import mood from '../../images/mood.svg';
+import moodicon from '../../images/mood.svg';
+import postService from '../../services/post';
 
-const CreatePost = ({ user }) => {
+const CreatePost = ({ user, postData, setPostData }) => {
+	const [displayMood, setDisplayMood] = useState(false);
+	const [mood, setMood] = useState('');
+	const moodButtonElement = useRef(null);
+	const moodDropdownElement = useRef(null);
+	const [inputText, setInputText] = useState('');
+
+	const postNewPost = async () => {
+		if (user) {
+			try {
+				const newPost = await postService.createPost(inputText, mood, user._id);
+				if (newPost.data.success && postData) {
+					const nextPosts = [...postData];
+					nextPosts.unshift(newPost.data.data);
+					console.log('llok', nextPosts);
+					setPostData(nextPosts);
+				}
+			} catch (error) {
+				alert(error.message);
+			}
+		}
+	};
+
+	const handleMoodClick = e => {
+		if (
+			moodButtonElement.current !== e.target &&
+			moodDropdownElement.current !== e.target
+		) {
+			setDisplayMood(false);
+		}
+	};
+
+	useEffect(() => {
+		window.addEventListener('click', handleMoodClick);
+	}, []);
+
+	const handleDisplayMood = () => {
+		const nextMood = !displayMood;
+		setDisplayMood(nextMood);
+	};
+
+	const passMood = currmood => {
+		setMood(currmood);
+	};
+
+	const handleInputText = e => {
+		setInputText(e.target.value);
+	};
+
 	return (
 		<div className='createpost-container'>
 			<div className='createpost-wraper'>
@@ -11,6 +60,8 @@ const CreatePost = ({ user }) => {
 				<div className='createpost-input'>
 					<img src={icon} alt='' />
 					<input
+						onChange={handleInputText}
+						value={inputText}
 						placeholder={`what's on your mind ${user.firstName}`}
 						type='text'
 					/>
@@ -18,12 +69,26 @@ const CreatePost = ({ user }) => {
 			</div>
 
 			<div className='createpost-post'>
-				<div className='createpost-post-mood'>
-					<img src={mood} alt='' />
-					<span>Mood</span>
+				<div
+					className='createpost-post-mood'
+					ref={moodButtonElement}
+					onClick={handleDisplayMood}>
+					<img src={moodicon} alt='' />
+					<span>{mood === '' ? <div>mood</div> : mood}</span>
 				</div>
-				<button>Share</button>
+				<button onClick={postNewPost}>Share</button>
 			</div>
+
+			{displayMood && (
+				<div className='mood-dropdown' ref={moodDropdownElement}>
+					<span onClick={() => passMood('happy')}>happy</span>
+					<span onClick={() => passMood('angry')}>angry</span>
+					<span onClick={() => passMood('motivated')}>motivated</span>
+					<span onClick={() => passMood('about to join the marine corp')}>
+						about to join the marine corp
+					</span>
+				</div>
+			)}
 		</div>
 	);
 };
