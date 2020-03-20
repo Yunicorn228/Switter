@@ -5,6 +5,7 @@ import NavBar from '../../components/NavBar';
 import Post from '../../components/Post';
 import ProfileBox from '../../components/ProfileBox';
 import FriendBox from '../../components/FriendBox';
+import { withRouter } from 'react-router-dom';
 
 const Profile = ({ match }) => {
 	const pages = ['status', 'friends', 'profile'];
@@ -20,4 +21,4 @@ const Profile = ({ match }) => {
 	);
 };
 
-export default Profile;
+export default withRouter(Profile);

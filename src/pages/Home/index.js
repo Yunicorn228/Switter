@@ -7,16 +7,17 @@ import NewFriends from '../../components/NewFriends';
 import Post from '../../components/Post';
 import Comment from '../../components/Comment';
 
-const HomePage = () => {
+const HomePage = ({ user }) => {
+	console.log(user);
 	return (
 		<div className='home-container'>
 			<div className='home-wraper'>
 				<div className='home-friend'>
-					<MyFriends />
+					<MyFriends user={user} />
 					<NewFriends />
 				</div>
 				<div className='home-posts'>
-					<CreatePost />
+					<CreatePost user={user} />
 					<Post />
 					<Post />
 					<Post />

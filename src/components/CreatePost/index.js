@@ -3,14 +3,17 @@ import './index.scss';
 import icon from '../../images/icon.svg';
 import mood from '../../images/mood.svg';
 
-const CreatePost = () => {
+const CreatePost = ({ user }) => {
 	return (
 		<div className='createpost-container'>
 			<div className='createpost-wraper'>
 				<div className='createpost-status'>Status</div>
 				<div className='createpost-input'>
 					<img src={icon} alt='' />
-					<input placeholder='Whats on your mind, sheldon?' type='text' />
+					<input
+						placeholder={`what's on your mind ${user.firstName}`}
+						type='text'
+					/>
 				</div>
 			</div>
 

@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import LogInPage from './pages/LogIn';
 import HomePage from './pages/Home';
-import Profile from './pages/Profile';
-import Setting from './pages/Setting';
+import ProfilePage from './pages/Profile';
+import SettingPage from './pages/Setting';
 import userService from './services/user';
 import NavBar from './components/NavBar';
 
@@ -33,17 +33,41 @@ function App() {
 		<Router>
 			<div className='App'>
 				<NavBar user={user} />
-				<Route exact path='/' component={LogInPage} />
+				<Route
+					exact
+					path='/'
+					render={() => {
+						return <LogInPage />;
+					}}
+				/>
 				<Route
 					exact
 					path='/home'
 					render={() => {
-						return <HomePage />;
+						return <HomePage user={user} />;
 					}}
 				/>
-				<Route exact path='/profile/:page' component={Profile} />
-				<Route exact path='/profile' component={Profile} />
-				<Route exact path='/setting' component={Setting} />
+				<Route
+					exact
+					path='/profile/:page'
+					render={() => {
+						return <ProfilePage />;
+					}}
+				/>
+				<Route
+					exact
+					path='/profile'
+					render={() => {
+						return <ProfilePage />;
+					}}
+				/>
+				<Route
+					exact
+					path='/setting'
+					render={() => {
+						return <SettingPage />;
+					}}
+				/>
 			</div>
 		</Router>
 	);
