@@ -1,9 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import classnames from 'classnames';
 import './index.scss';
 import { Link } from 'react-router-dom';
+import AuthenticationService from '../../services/authentication';
+import saveTokenToBrowser from '../../helper/token';
+import { withRouter } from 'react-router-dom';
 
-const SignIn = ({ handleDisplayCode, displayCode }) => {
+const SignIn = ({ handleDisplayCode, displayCode, history }) => {
+	const [phone, setPhone] = useState('');
+	const [password, setPassword] = useState('');
+	console.log(password);
+
+	const handleLogin = async () => {
+		try {
+			const result = await AuthenticationService.login(phone, password);
+			if (result.data.success) {
+				const user = await AuthenticationService.verifyUserLoginStatus(
+					result.data.data.token,
+				);
+				saveTokenToBrowser(result.data.data.token, user.data.data.userId);
+				history.push('/home');
+			} else {
+				alert(result.data.data);
+			}
+		} catch (error) {
+			alert(error.message);
+		}
+	};
+
 	return (
 		<div
 			className={classnames('signin-container', {
@@ -13,16 +37,24 @@ const SignIn = ({ handleDisplayCode, displayCode }) => {
 			<div className='big-title'>Switter</div>
 			<div className='signin-wrapper'>
 				<div className='small-title'>sign In</div>
-				<input placeholder='Enter your phone number' type='text' />
-				<input placeholder='Enter your pass word' type='password' />
+				<input
+					onChange={e => setPhone(e.target.value)}
+					placeholder='Enter your phone number'
+					type='text'
+				/>
+				<input
+					onChange={e => setPassword(e.target.value)}
+					placeholder='Enter your pass word'
+					type='password'
+				/>
 				<div className='signin-password'>
 					<input type='checkbox' />
 					<div>remember password</div>
 				</div>
 
-				<Link to={`/home`}>
-					<button className='bf-blue-button'>Log In</button>
-				</Link>
+				<button onClick={handleLogin} className='bf-blue-button'>
+					Log In
+				</button>
 
 				<div onClick={() => handleDisplayCode(1)} className='signin-noaccount'>
 					Don’t have an account? Register for one now.
@@ -32,4 +64,4 @@ const SignIn = ({ handleDisplayCode, displayCode }) => {
 	);
 };
 
-export default SignIn;
+export default withRouter(SignIn);

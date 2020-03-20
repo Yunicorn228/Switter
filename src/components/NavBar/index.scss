@@ -48,6 +48,11 @@
 		display: flex;
 		align-items: center;
 		padding-right: 50px;
+		img {
+			height: 30px;
+			width: 30px;
+			border-radius: 50%;
+		}
 		.nav-user-name {
 			margin-left: 16px;
 		}

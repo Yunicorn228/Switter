@@ -4,8 +4,10 @@ import logo from '../../images/logo.svg';
 import icon from '../../images/homepageicon.svg';
 import classnames from 'classnames';
 import { Link } from 'react-router-dom';
+import { handleSignout } from '../../helper/token';
 
-const NavBar = ({ displayBox }) => {
+const NavBar = ({ displayBox, user }) => {
+	console.log(user);
 	const [dropDown, setDropDown] = useState(false);
 	const navDropDownElement = useRef(null);
 	const navButtonElement = useRef(null);
@@ -48,9 +50,9 @@ const NavBar = ({ displayBox }) => {
 				ref={navButtonElement}
 				onClick={() => handleDropDown()}
 				className='nav-content-wraper'>
-				<img ref={navButtonElement} src={icon} alt='' />
+				<img ref={navButtonElement} src={user.avatar} alt='' />
 				<div ref={navButtonElement} className='nav-user-name'>
-					Sheldon Yu
+					{user.firstName} {user.lastName}
 				</div>
 			</div>
 			<div
@@ -63,7 +65,9 @@ const NavBar = ({ displayBox }) => {
 					<Link to='/setting'>Setting</Link>
 				</div>
 				<div className='nav-logoout'>
-					<Link to={`/`}>Log Out</Link>
+					<Link onClick={handleSignout} to={`/`}>
+						Log Out
+					</Link>
 				</div>
 			</div>
 		</div>

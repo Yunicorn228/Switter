@@ -9,9 +9,9 @@ import FriendBox from '../../components/FriendBox';
 const Profile = ({ match }) => {
 	const pages = ['status', 'friends', 'profile'];
 	let page = pages.includes(match.params.page) ? match.params.page : 'status';
+	console.log(page);
 	return (
 		<div className='profile-wraper'>
-			<NavBar />
 			<Banner match={match} />
 			{page === 'status' && <Post />}
 			{page === 'profile' && <ProfileBox />}

@@ -6,7 +6,6 @@ import ProfileBox from '../../components/ProfileBox';
 const Setting = () => {
 	return (
 		<div className='setting-container'>
-			<NavBar />
 			<ProfileBox />
 		</div>
 	);

@@ -10,7 +10,6 @@ import Comment from '../../components/Comment';
 const HomePage = () => {
 	return (
 		<div className='home-container'>
-			<NavBar />
 			<div className='home-wraper'>
 				<div className='home-friend'>
 					<MyFriends />
