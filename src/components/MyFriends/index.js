@@ -2,39 +2,19 @@ import React from 'react';
 import './index.scss';
 import icon from '../../images/icon.svg';
 
-const MyFriends = () => {
+const MyFriends = ({ user }) => {
+	console.log(user.friends);
 	return (
 		<div className='myfriends-container'>
 			<div className='myfriends-title'>My Friends</div>
 			<div className='myfriends-list-container'>
-				<div className='myfriends-list-content'>
-					<img src={icon} alt='' />
-					<div className='myfriends-name'>Sunny Wang</div>
-				</div>
-				<div className='myfriends-list-content'>
-					<img src={icon} alt='' />
-					<div className='myfriends-name'>Sunny Wang</div>
-				</div>
-				<div className='myfriends-list-content'>
-					<img src={icon} alt='' />
-					<div className='myfriends-name'>Sunny Wang</div>
-				</div>
-				<div className='myfriends-list-content'>
-					<img src={icon} alt='' />
-					<div className='myfriends-name'>Sunny Wang</div>
-				</div>
-				<div className='myfriends-list-content'>
-					<img src={icon} alt='' />
-					<div className='myfriends-name'>Sunny Wang</div>
-				</div>
-				<div className='myfriends-list-content'>
-					<img src={icon} alt='' />
-					<div className='myfriends-name'>Sunny Wang</div>
-				</div>
-				<div className='myfriends-list-content'>
-					<img src={icon} alt='' />
-					<div className='myfriends-name'>Sunny Wang</div>
-				</div>
+				{user.friends &&
+					user.friends.map(friend => (
+						<div className='myfriends-list-content'>
+							<img src={icon} alt='' />
+							<div className='myfriends-name'>friend</div>
+						</div>
+					))}
 			</div>
 			<div className='myfriends-page-select'>
 				<div>1</div>

@@ -3,6 +3,7 @@ import './index.scss';
 import { Link } from 'react-router-dom';
 import classnames from 'classnames';
 import icon from '../../images/profileicon.svg';
+import Name from '../../helper/name';
 
 const navLinks = [
 	{
@@ -18,13 +19,17 @@ const navLinks = [
 		link: '/profile/friends',
 	},
 ];
-const Banner = ({ match }) => {
+const Banner = ({ match, user }) => {
 	return (
 		<div className='banner-container'>
 			<div className='banner-content'>
-				<img src={icon} alt='' />
+				<img src={user.avatar} alt='' />
 				<div className='banner-links-container'>
-					<h1>Sheldon Yu</h1>
+					<h1>
+						{user.firstName && Name.capitalizeName(user.firstName)}
+						{` `}
+						{user.lastName && Name.capitalizeName(user.lastName)}
+					</h1>
 					<ul>
 						{navLinks.map(v => (
 							<li>

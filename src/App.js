@@ -51,14 +51,14 @@ function App() {
 					exact
 					path='/profile/:page'
 					render={() => {
-						return <ProfilePage />;
+						return <ProfilePage user={user} />;
 					}}
 				/>
 				<Route
 					exact
 					path='/profile'
 					render={() => {
-						return <ProfilePage />;
+						return <ProfilePage user={user} />;
 					}}
 				/>
 				<Route
