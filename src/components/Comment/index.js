@@ -4,7 +4,7 @@ import icon from '../../images/icon.svg';
 import classnames from 'classnames';
 import postService from '../../services/post';
 
-const Comment = ({ currentPost, setCurrentPost, user }) => {
+const Comment = ({ currentPost, setCurrentPost, user, post }) => {
 	const [commentInput, setCommentInput] = useState('');
 	console.log(currentPost);
 

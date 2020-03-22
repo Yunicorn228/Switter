@@ -40,59 +40,64 @@ const Post = ({ post, user }) => {
 
 	return (
 		<React.Fragment>
-			<div className='post-container'>
-				<div
-					ref={reportDropdownElement}
-					className={classnames('post-report-drop', { active: showReport })}>
-					Report
-				</div>
+			{post && (
+				<div className='post-container'>
+					<div
+						ref={reportDropdownElement}
+						className={classnames('post-report-drop', { active: showReport })}>
+						Report
+					</div>
 
-				<div className='post-header'>
-					<div className='post-title'>
-						<img src={icon} alt='' />
+					<div className='post-header'>
+						<div className='post-title'>
+							<img src={icon} alt='' />
 
-						<div className='post-block'>
-							<div className='post-sender'>
-								<div className='post-sender-name'>Sheldon Yu</div>
-								<div className='post-sender-feeling'>
-									is feeling {post.mood}
+							<div className='post-block'>
+								<div className='post-sender'>
+									<div className='post-sender-name'>Sheldon Yu</div>
+									<div className='post-sender-feeling'>
+										{console.log(post)}
+										is feeling {post.mood}
+									</div>
 								</div>
+								<div className='post-time'> 7 hours ago</div>
 							</div>
-							<div className='post-time'> 7 hours ago</div>
+						</div>
+						<img
+							ref={reportButtonElement}
+							onClick={() => handleReport()}
+							src={reportimg}
+							alt=''
+						/>
+					</div>
+
+					<div className='post-content'>{post.text}</div>
+
+					<div className='post-reviews'>
+						<div className='post-likes'>
+							<img src={heart} alt='' />
+							{post.likes.length}
+						</div>
+						<div
+							onClick={() => handleDisplayComment()}
+							className='post-comment'>
+							<img src={commenticon} alt='' />
+							{post.comments.length}
+						</div>
+						<div className='post-views'>
+							<img src={eye} alt='' />
+							{post._v}
 						</div>
 					</div>
-					<img
-						ref={reportButtonElement}
-						onClick={() => handleReport()}
-						src={reportimg}
-						alt=''
-					/>
+					{showComment && (
+						<Comment
+							currentPost={currentPost}
+							setCurrentPost={setCurrentPost}
+							user={user}
+						/>
+					)}
 				</div>
-
-				<div className='post-content'>{post.text}</div>
-
-				<div className='post-reviews'>
-					<div className='post-likes'>
-						<img src={heart} alt='' />
-						{post.likes.length}
-					</div>
-					<div onClick={() => handleDisplayComment()} className='post-comment'>
-						<img src={commenticon} alt='' />
-						{post.comments.length}
-					</div>
-					<div className='post-views'>
-						<img src={eye} alt='' />
-						{post._v}
-					</div>
-				</div>
-				{showComment && (
-					<Comment
-						currentPost={currentPost}
-						setCurrentPost={setCurrentPost}
-						user={user}
-					/>
-				)}
-			</div>
+			)}
 		</React.Fragment>
 	);
 };
