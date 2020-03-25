@@ -34,7 +34,7 @@ const MyFriends = ({ user }) => {
 				{friendArr &&
 					friendArr.map(friend => (
 						<div className='myfriends-list-content'>
-							<img src={friend.avatar} alt='friend' />
+							<img src={friend.avatar} alt='frien' />
 							<div className='myfriends-name'>{friend.lastName}</div>
 						</div>
 					))}
