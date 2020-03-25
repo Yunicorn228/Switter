@@ -5,20 +5,26 @@ import { Link } from 'react-router-dom';
 import AuthenticationService from '../../services/authentication';
 import saveTokenToBrowser from '../../helper/token';
 import { withRouter } from 'react-router-dom';
+import axios from 'axios';
 
 const SignIn = ({ handleDisplayCode, displayCode, history }) => {
 	const [phone, setPhone] = useState('');
 	const [password, setPassword] = useState('');
-	console.log(password);
 
 	const handleLogin = async () => {
 		try {
 			const result = await AuthenticationService.login(phone, password);
+
 			if (result.data.success) {
 				const user = await AuthenticationService.verifyUserLoginStatus(
-					result.data.data.token,
+					result.data.data,
 				);
-				saveTokenToBrowser(result.data.data.token, user.data.data.userId);
+
+				saveTokenToBrowser(result.data.data);
+				// axios.defaults.headers.common[
+				// 	'authorization'
+				// ] = `Bearer ${result.data.data}`;
+
 				history.push('/home');
 			} else {
 				alert(result.data.data);

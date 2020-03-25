@@ -1,8 +1,7 @@
 import AuthenticationService from '../services/authentication';
 
-const saveTokenToBrowser = async (token, userId) => {
+const saveTokenToBrowser = async token => {
 	window.localStorage.setItem('token', token);
-	window.localStorage.setItem('userId', userId);
 	//save the token to browser
 };
 

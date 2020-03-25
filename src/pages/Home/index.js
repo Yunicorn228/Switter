@@ -10,15 +10,29 @@ import userService from '../../services/user';
 
 const HomePage = ({ user, postData, setPostData }) => {
 	const [strangers, setStrangers] = useState([]);
+	const [page, setPage] = useState(1);
+	console.log(page);
+
+	const handleNewPage = num => {
+		setPage(num);
+	};
 
 	useEffect(() => {
 		if (user._id) {
 			const fetchStranger = async () => {
+				const userToken = window.localStorage.getItem('token');
+				console.log(userToken);
 				if (user._id) {
 					try {
-						const strangers = await userService.findStrangerByUserId(user._id);
+						const strangers = await userService.findStrangerByUserId(
+							user._id,
+							page,
+							userToken,
+						);
+
 						if (strangers.data.success) {
-							setStrangers(strangers.data.data);
+							console.log(strangers.data.data.data);
+							setStrangers(strangers.data.data.data);
 						}
 					} catch (error) {
 						alert(error.message);
@@ -27,14 +41,19 @@ const HomePage = ({ user, postData, setPostData }) => {
 			};
 			fetchStranger();
 		}
-	}, [user]);
+	}, [user, page]);
 
 	return (
 		<div className='home-container'>
 			<div className='home-wraper'>
 				<div className='home-friend'>
 					<MyFriends user={user} />
-					<NewFriends strangers={strangers} />
+					<NewFriends
+						user={user}
+						handleNewPage={handleNewPage}
+						strangers={strangers}
+						setStrangers={setStrangers}
+					/>
 				</div>
 				<div className='home-posts'>
 					<CreatePost
@@ -42,7 +61,6 @@ const HomePage = ({ user, postData, setPostData }) => {
 						setPostData={setPostData}
 						postData={postData}
 					/>
-
 					{postData && postData.map(post => <Post user={user} post={post} />)}
 				</div>
 			</div>

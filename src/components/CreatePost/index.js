@@ -12,13 +12,22 @@ const CreatePost = ({ user, postData, setPostData }) => {
 	const [inputText, setInputText] = useState('');
 
 	const postNewPost = async () => {
+		const userToken = window.localStorage.getItem('token');
 		if (user) {
 			try {
-				const newPost = await postService.createPost(inputText, mood, user._id);
+				const newPost = await postService.createPost(
+					inputText,
+					mood,
+					user._id,
+					userToken,
+				);
+				console.log(newPost);
 				if (newPost.data.success && postData) {
 					const nextPosts = [...postData];
 					nextPosts.unshift(newPost.data.data);
 					setPostData(nextPosts);
+				} else {
+					alert(newPost.data.data);
 				}
 			} catch (error) {
 				alert(error.message);

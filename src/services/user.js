@@ -1,30 +1,55 @@
 import axios from 'axios';
 import getApiURL from '../constants/apiUrl';
 
+//axios 后面第一个是url 第二个是body 第三个是options
+
 const url = getApiURL();
 
 const getAllUser = () => {
 	return axios.get(`${url}/users/fetch`);
 };
 
-const addFriend = () => {
-	return axios.post(`${url}/users/friends/add`);
+const addFriend = (userId, friendId, token) => {
+	return axios.post(
+		`${url}/users/friends/add`,
+		{ userId, friendId },
+		{
+			headers: {
+				authorization: `Bearer ${token}`,
+			},
+		},
+	);
 };
 
 const deleteFriend = () => {
 	return axios.post(`${url}/users/friends/remove`);
 };
 
-const findFriendById = id => {
-	return axios.get(`${url}/users/friends/byId`, { params: { id } });
+const findFriendById = (userId, page, token) => {
+	return axios.get(`${url}/users/friends/byId`, {
+		params: { userId, page },
+		headers: {
+			authorization: `Bearer ${token}`,
+		},
+	});
 };
 
-const findUserById = userId => {
-	return axios.get(`${url}/users/find/byId`, { params: { userId } });
+const findUserById = (userId, token) => {
+	return axios.get(`${url}/users/find/byId`, {
+		params: { userId },
+		headers: {
+			authorization: `Bearer ${token}`,
+		},
+	});
 };
 
-const findStrangerByUserId = userId => {
-	return axios.get(`${url}/users/strangers/byId`, { params: { userId } });
+const findStrangerByUserId = (userId, page, token) => {
+	return axios.get(`${url}/users/strangers/byId`, {
+		params: { userId, page },
+		headers: {
+			authorization: `Bearer ${token}`,
+		},
+	});
 };
 
 const searchFriendByUser = () => {
@@ -35,8 +60,16 @@ const profileUpdate = () => {
 	return axios.post(`${url}/users/update/email`);
 };
 
-const UploadProfilePicture = file => {
-	return axios.post(`${url}/users/images`, file);
+const getCurrentLoggedInUser = token => {
+	return axios.post(
+		`${url}/users/current`,
+		{},
+		{
+			headers: {
+				authorization: `Bearer ${token}`,
+			},
+		},
+	);
 };
 
 const userService = {
@@ -48,7 +81,8 @@ const userService = {
 	findStrangerByUserId,
 	searchFriendByUser,
 	profileUpdate,
-	UploadProfilePicture,
+
+	getCurrentLoggedInUser,
 };
 
 export default userService;

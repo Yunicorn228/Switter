@@ -56,7 +56,6 @@ const Post = ({ post, user }) => {
 								<div className='post-sender'>
 									<div className='post-sender-name'>Sheldon Yu</div>
 									<div className='post-sender-feeling'>
-										{console.log(post)}
 										is feeling {post.mood}
 									</div>
 								</div>

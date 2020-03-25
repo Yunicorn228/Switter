@@ -7,32 +7,57 @@ import SettingPage from './pages/Setting';
 import userService from './services/user';
 import NavBar from './components/NavBar';
 import postService from './services/post';
+import AuthenticationService from './services/authentication';
 
 function App() {
 	const [user, setUser] = useState({});
 	const [postData, setPostData] = useState([]);
+	const [userId, setUserId] = useState('');
+
+	// useEffect(() => {
+	// 	const fetchUser = async () => {
+	// 		if (userId) {
+	// 			try {
+	// 				const response = await userService.findUserById(userId); // get full user data from server
+
+	// 				if (response.data.success) {
+	// 					setUser(response.data.data);
+	// 				}
+	// 			} catch (error) {
+	// 				alert(error.message);
+	// 			}
+	// 		}
+	// 	};
+	// 	fetchUser();
+	// }, []);
 
 	useEffect(() => {
-		const fetchUser = async () => {
-			const userId = window.localStorage.getItem('userId'); // get data from local storage
-			if (userId) {
+		const fetchUserId = async () => {
+			const userToken = window.localStorage.getItem('token');
+
+			if (userToken) {
 				try {
-					const response = await userService.findUserById(userId); // get full user data from server
-					if (response.data.success) {
-						setUser(response.data.data);
+					const userid = await userService.getCurrentLoggedInUser(userToken);
+
+					if (userid.data.success) {
+						setUserId(userid.data.data._id);
+						setUser(userid.data.data);
 					}
 				} catch (error) {
 					alert(error.message);
 				}
 			}
 		};
-		fetchUser();
+		fetchUserId();
 	}, []);
 
 	useEffect(() => {
 		const fetchPost = async () => {
+			const userToken = window.localStorage.getItem('token');
+
 			try {
-				const posts = await postService.fetchAllPost();
+				const posts = await postService.fetchAllPost(userToken);
+
 				if (posts) {
 					setPostData(posts.data);
 				}

@@ -3,16 +3,36 @@ import getApiURL from '../constants/apiUrl';
 
 const url = getApiURL();
 
-const fetchAllPost = () => {
-	return axios.get(`${url}/posts/fetch`);
+const fetchAllPost = token => {
+	return axios.get(`${url}/posts/fetch`, {
+		headers: {
+			authorization: `Bearer ${token}`,
+		},
+	});
 };
 
-const createPost = (text, mood, authorId) => {
-	return axios.post(`${url}/posts/create`, { text, mood, authorId });
+const createPost = (text, mood, authorId, token) => {
+	return axios.post(
+		`${url}/posts/create`,
+		{ text, mood, authorId },
+		{
+			headers: {
+				authorization: `Bearer ${token}`,
+			},
+		},
+	);
 };
 
-const createCommentInPost = (authorId, postId, text) => {
-	return axios.post(`${url}/posts/comment/create`, { authorId, postId, text });
+const createCommentInPost = (authorId, postId, text, token) => {
+	return axios.post(
+		`${url}/posts/comment/create`,
+		{ authorId, postId, text },
+		{
+			headers: {
+				authorization: `Bearer ${token}`,
+			},
+		},
+	);
 };
 
 const likeComment = () => {

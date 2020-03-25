@@ -7,6 +7,7 @@ import AuthenticationService from '../../services/authentication';
 import saveTokenToBrowser from '../../helper/token';
 import userService from '../../services/user';
 import { withRouter } from 'react-router-dom';
+import axios from 'axios';
 
 const Register = ({ handleDisplayCode, displayCode, pages, history }) => {
 	const genderDropdwonElement = useRef(null);
@@ -32,8 +33,11 @@ const Register = ({ handleDisplayCode, displayCode, pages, history }) => {
 					dataForm.phone,
 					dataForm.password,
 				); // posting data login
+				const token = loginResult.data.data;
 
-				saveTokenToBrowser(loginResult.data.data.token);
+				saveTokenToBrowser(token);
+
+				// axios.defaults.headers.common['authorization'] = `Bearer ${token}`;
 			} else {
 				alert(result.data.data);
 			}
@@ -52,7 +56,9 @@ const Register = ({ handleDisplayCode, displayCode, pages, history }) => {
 			const formData = new FormData(); //?????
 			formData.append('files', file); // only way to prepare the file to upload to server
 
-			const uploaded = await userService.UploadProfilePicture(formData); // upload
+			const uploaded = await AuthenticationService.UploadProfilePicture(
+				formData,
+			); // upload
 
 			const nextDataForm = { ...dataForm };
 

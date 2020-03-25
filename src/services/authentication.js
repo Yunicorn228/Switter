@@ -23,12 +23,22 @@ const verifyPhoneCode = () => {
 	return axios.post(`${url}/auth/verify/phone/code`);
 };
 
+const UploadProfilePicture = file => {
+	return axios.post(`${url}/auth/images`, file);
+};
+
+const getUserInfoByToken = token => {
+	return axios.post(`${url}/auth/verify/user`, token);
+};
+
 const AuthenticationService = {
 	login,
 	register,
 	verifyUserLoginStatus,
 	verifyPhoneNumber,
 	verifyPhoneCode,
+	UploadProfilePicture,
+	getUserInfoByToken,
 };
 
 export default AuthenticationService;

@@ -13,13 +13,16 @@ const Comment = ({ currentPost, setCurrentPost, user, post }) => {
 	};
 
 	const submitComment = async e => {
+		const userToken = window.localStorage.getItem('token');
 		if (e.keyCode === 13 && user._id) {
 			try {
 				const newComment = await postService.createCommentInPost(
 					user._id,
 					currentPost._id,
 					commentInput,
+					userToken,
 				);
+				console.log(userToken);
 				console.log('hi', newComment);
 				if (newComment.data.success) {
 					const nextPost = { ...currentPost };

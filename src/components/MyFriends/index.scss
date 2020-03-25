@@ -11,13 +11,17 @@
 		border-bottom: 1px solid #f2f2f2;
 	}
 	.myfriends-list-container {
-		height: 378px;
+		height: auto;
 	}
 	.myfriends-list-content {
+		justify-content: space-between;
 		padding: 12px 28px;
 		display: flex;
 		align-items: center;
 		cursor: default;
+		.myfriends-info {
+			display: flex;
+		}
 		img {
 			height: 30px;
 			width: 30px;
