@@ -1,5 +1,5 @@
-import axios from 'axios';
-import getApiURL from '../constants/apiUrl';
+// import axios from 'axios';
+// import getApiURL from '../constants/apiUrl';
 
 //axios 后面第一个是url 第二个是body 第三个是options
 
