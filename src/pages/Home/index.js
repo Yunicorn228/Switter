@@ -11,7 +11,6 @@ import userService from '../../services/user';
 const HomePage = ({ user, postData, setPostData }) => {
 	const [strangers, setStrangers] = useState([]);
 	const [page, setPage] = useState(1);
-	console.log(page);
 
 	const handleNewPage = num => {
 		setPage(num);
@@ -21,7 +20,7 @@ const HomePage = ({ user, postData, setPostData }) => {
 		if (user._id) {
 			const fetchStranger = async () => {
 				const userToken = window.localStorage.getItem('token');
-				console.log(userToken);
+
 				if (user._id) {
 					try {
 						const strangers = await userService.findStrangerByUserId(
@@ -31,7 +30,6 @@ const HomePage = ({ user, postData, setPostData }) => {
 						);
 
 						if (strangers.data.success) {
-							console.log(strangers.data.data.data);
 							setStrangers(strangers.data.data.data);
 						}
 					} catch (error) {

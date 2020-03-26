@@ -34,13 +34,13 @@ const NavBar = ({ displayBox, user }) => {
 				<img src={logo} alt='' />
 				<ul>
 					<li>
-						<Link to='/home'>Home</Link>
+						<Link to={`/home`}>Home</Link>
 					</li>
 					<li>
-						<Link to='/profile/friends'>Friends</Link>
+						<Link to={`/profile/friends/${user._id}`}>Friends</Link>
 					</li>
 					<li>
-						<Link to='/profile/status'>Profile</Link>
+						<Link to={`/profile/status/${user._id}`}>Profile</Link>
 					</li>
 				</ul>
 			</div>

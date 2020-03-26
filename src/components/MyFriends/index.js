@@ -2,18 +2,19 @@ import React, { useState, useEffect } from 'react';
 import './index.scss';
 import icon from '../../images/icon.svg';
 import userService from '../../services/user';
+import { Link } from 'react-router-dom';
 
 const MyFriends = ({ user }) => {
 	const [friendArr, setFriendArr] = useState([]);
-	console.log(friendArr);
-	console.log(user);
+	const [page, setPage] = useState(1);
+
 	useEffect(() => {
 		const userToken = window.localStorage.getItem('token');
 		const findFriend = async () => {
 			try {
 				const myfriends = await userService.findFriendById(
 					user._id,
-					1,
+					page,
 					userToken,
 				);
 				if (myfriends.data.success) {
@@ -25,7 +26,11 @@ const MyFriends = ({ user }) => {
 		};
 
 		findFriend();
-	}, [user]);
+	}, [user, page]);
+
+	const handlePage = num => {
+		setPage(num);
+	};
 
 	return (
 		<div className='myfriends-container'>
@@ -33,16 +38,18 @@ const MyFriends = ({ user }) => {
 			<div className='myfriends-list-container'>
 				{friendArr &&
 					friendArr.map(friend => (
-						<div className='myfriends-list-content'>
-							<img src={friend.avatar} alt='' />
-							<div className='myfriends-name'>{friend.lastName}</div>
-						</div>
+						<Link to={`/profile/status/${friend._id}`}>
+							<div className='myfriends-list-content'>
+								<img src={friend.avatar} alt='' />
+								<div className='myfriends-name'>{friend.lastName}</div>
+							</div>
+						</Link>
 					))}
 			</div>
 			<div className='myfriends-page-select'>
-				<div>1</div>
-				<div>2</div>
-				<div>3</div>
+				<div onClick={() => handlePage(1)}>1</div>
+				<div onClick={() => handlePage(2)}>2</div>
+				<div onClick={() => handlePage(3)}>3</div>
 			</div>
 		</div>
 	);

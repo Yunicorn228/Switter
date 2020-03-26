@@ -39,8 +39,12 @@ const likeComment = () => {
 	return axios.post(`${url}/posts/comment/like`);
 };
 
-const likePost = () => {
-	return axios.post(`${url}/posts/like`);
+const likePost = (authorId, postId, token) => {
+	return axios.post(
+		`${url}/posts/like`,
+		{ authorId, postId },
+		{ headers: { authorization: `Bearer ${token}` } },
+	);
 };
 
 const unlikePost = () => {
@@ -51,8 +55,13 @@ const findPostById = () => {
 	return axios.get(`${url}/posts/find/byId`);
 };
 
-const findPostByUser = () => {
-	return axios.get(`${url}/posts/find/byUser`);
+const findPostByUser = (userId, page, token) => {
+	return axios.get(`${url}/posts/find/byUser`, {
+		params: { userId, page },
+		headers: {
+			authorization: `Bearer ${token}`,
+		},
+	});
 };
 
 const findPostByFriend = () => {

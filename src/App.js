@@ -94,7 +94,7 @@ function App() {
 				/>
 				<Route
 					exact
-					path='/profile/:page'
+					path='/profile/:page/:id'
 					render={() => {
 						return <ProfilePage user={user} />;
 					}}

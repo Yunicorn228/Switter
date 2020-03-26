@@ -3,6 +3,7 @@ import './index.scss';
 import icon from '../../images/icon.svg';
 import add from '../../images/add.svg';
 import userService from '../../services/user';
+import { useState } from 'react';
 
 const NewFriends = ({ user, strangers, handleNewPage, setStrangers }) => {
 	const handleAddFriend = async (item, index) => {

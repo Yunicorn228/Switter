@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './index.scss';
 import { Link } from 'react-router-dom';
 import classnames from 'classnames';
 import icon from '../../images/profileicon.svg';
 import Name from '../../helper/name';
+import userService from '../../services/user';
 
 const navLinks = [
 	{
@@ -20,15 +21,36 @@ const navLinks = [
 	},
 ];
 const Banner = ({ match, user }) => {
+	const id = match.params.id;
+	const [idData, setIdData] = useState({});
+
+	useEffect(() => {
+		const userToken = window.localStorage.getItem('token');
+
+		const fetchUser = async () => {
+			if (id) {
+				try {
+					const info = await userService.findUserById(id, userToken);
+					if (info.data.success) {
+						setIdData(info.data.data);
+					}
+				} catch (error) {
+					alert(error.message);
+				}
+			}
+		};
+		fetchUser();
+	}, []);
+
 	return (
 		<div className='banner-container'>
 			<div className='banner-content'>
-				<img src={user.avatar} alt='' />
+				<img src={idData.avatar} alt='' />
 				<div className='banner-links-container'>
 					<h1>
-						{user.firstName && Name.capitalizeName(user.firstName)}
+						{idData.firstName && Name.capitalizeName(idData.firstName)}
 						{` `}
-						{user.lastName && Name.capitalizeName(user.lastName)}
+						{idData.lastName && Name.capitalizeName(idData.lastName)}
 					</h1>
 					<ul>
 						{navLinks.map(v => (
@@ -37,7 +59,7 @@ const Banner = ({ match, user }) => {
 									className={classnames({
 										active: match.params.page === v.link.split('/')[2],
 									})}
-									to={v.link}>
+									to={`${v.link}/${id}`}>
 									{v.title}
 								</Link>
 							</li>

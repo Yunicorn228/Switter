@@ -3,10 +3,11 @@ import './index.scss';
 import icon from '../../images/icon.svg';
 import classnames from 'classnames';
 import postService from '../../services/post';
+import commentText from '../../components/CommentText';
+import CommentText from '../../components/CommentText';
 
 const Comment = ({ currentPost, setCurrentPost, user, post }) => {
 	const [commentInput, setCommentInput] = useState('');
-	console.log(currentPost);
 
 	const handleCommentInput = e => {
 		setCommentInput(e.target.value);
@@ -22,11 +23,9 @@ const Comment = ({ currentPost, setCurrentPost, user, post }) => {
 					commentInput,
 					userToken,
 				);
-				console.log(userToken);
-				console.log('hi', newComment);
 				if (newComment.data.success) {
 					const nextPost = { ...currentPost };
-					console.log(nextPost);
+
 					nextPost.comments = newComment.data.data.comments;
 
 					setCurrentPost(nextPost);
@@ -45,21 +44,10 @@ const Comment = ({ currentPost, setCurrentPost, user, post }) => {
 			</div>
 
 			{currentPost.comments &&
-				currentPost.comments.map(comment => (
-					<div className='comment-comment'>
-						<div className='comment-wraper'>
-							<img src={icon} alt='' />
-							<div className='comment-content'>
-								<div className='comment-name'>{comment.authorId}</div>
-								<span>{comment.text}</span>
-							</div>
-						</div>
-						<div className='comment-like'>like</div>
-					</div>
-				))}
+				currentPost.comments.map(comment => <CommentText comment={comment} />)}
 
 			<div className='comment-write'>
-				<img src={icon} alt='' />
+				<img src={user.avatar} alt='' />
 				<input
 					value={commentInput}
 					onChange={handleCommentInput}

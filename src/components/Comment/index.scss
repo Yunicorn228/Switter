@@ -14,6 +14,7 @@
 	.comment-comment {
 		position: relative;
 		margin-bottom: 16px;
+		color: red;
 		.comment-like {
 			position: relative;
 			left: 47px;
@@ -29,6 +30,8 @@
 			img {
 				height: 37px;
 				width: 37px;
+				border-radius: 50%;
+				margin-right: 10px;
 			}
 			.comment-content {
 				display: flex;

@@ -12,6 +12,10 @@
 	}
 	.myfriends-list-container {
 		height: auto;
+		a {
+			text-decoration: none;
+			color: black;
+		}
 	}
 	.myfriends-list-content {
 		justify-content: space-between;

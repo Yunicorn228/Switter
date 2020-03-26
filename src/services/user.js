@@ -11,13 +11,13 @@ const getAllUser = () => {
 
 const addFriend = (userId, friendId, token) => {
 	return axios.post(
-		`${url}/users/friends/add`,
-		{ userId, friendId },
+		`${url}/users/friends/add`, // url
+		{ userId, friendId }, // body
 		{
 			headers: {
 				authorization: `Bearer ${token}`,
 			},
-		},
+		}, // options
 	);
 };
 

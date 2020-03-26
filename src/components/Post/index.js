@@ -7,13 +7,19 @@ import commenticon from '../../images/comment.svg';
 import eye from '../../images/eye.svg';
 import classnames from 'classnames';
 import Comment from '../../components/Comment';
+import userService from '../../services/user';
+import { Link } from 'react-router-dom';
+import postService from '../../services/post';
 
 const Post = ({ post, user }) => {
 	const [showComment, setCommentShowStatus] = useState(false);
 	const [showReport, setReportShowStatus] = useState(false);
 	const [currentPost, setCurrentPost] = useState(post);
+	const [postData, setPostData] = useState({});
 	const reportDropdownElement = useRef(null);
 	const reportButtonElement = useRef(null);
+	const [likeLength, setLikeLength] = useState(post.likes.length);
+	console.log(likeLength);
 
 	const handleDisplayComment = () => {
 		const newShowComment = !showComment;
@@ -38,6 +44,42 @@ const Post = ({ post, user }) => {
 		window.addEventListener('click', handleScreenClick);
 	}, []);
 
+	useEffect(() => {
+		const userToken = window.localStorage.getItem('token');
+
+		const getPostInfo = async () => {
+			if (post) {
+				try {
+					const info = await userService.findUserById(post.authorId, userToken);
+
+					if (info.data.success) {
+						setPostData(info.data.data);
+					}
+				} catch (error) {
+					alert(error.message);
+				}
+			}
+		};
+		getPostInfo();
+	}, [post]);
+
+	const handleLikePost = async id => {
+		const userToken = window.localStorage.getItem('token');
+		if (post) {
+			try {
+				const likePost = await postService.likePost(user._id, id, userToken);
+				if (likePost.data.success) {
+					let newLength = likeLength;
+					setLikeLength(newLength + 1);
+				} else {
+					alert(likePost.data.data);
+				}
+			} catch (error) {
+				alert(error.message);
+			}
+		}
+	};
+
 	return (
 		<React.Fragment>
 			{post && (
@@ -50,11 +92,13 @@ const Post = ({ post, user }) => {
 
 					<div className='post-header'>
 						<div className='post-title'>
-							<img src={icon} alt='' />
+							<Link to={`/profile/status/${post.authorId}`}>
+								<img src={postData.avatar} alt='' />
+							</Link>
 
 							<div className='post-block'>
 								<div className='post-sender'>
-									<div className='post-sender-name'>Sheldon Yu</div>
+									<div className='post-sender-name'>{`${postData.firstName} ${postData.lastName}`}</div>
 									<div className='post-sender-feeling'>
 										is feeling {post.mood}
 									</div>
@@ -73,9 +117,11 @@ const Post = ({ post, user }) => {
 					<div className='post-content'>{post.text}</div>
 
 					<div className='post-reviews'>
-						<div className='post-likes'>
+						<div
+							onClick={() => handleLikePost(post._id)}
+							className='post-likes'>
 							<img src={heart} alt='' />
-							{post.likes.length}
+							{likeLength}
 						</div>
 						<div
 							onClick={() => handleDisplayComment()}

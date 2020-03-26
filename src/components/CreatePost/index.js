@@ -66,7 +66,7 @@ const CreatePost = ({ user, postData, setPostData }) => {
 			<div className='createpost-wraper'>
 				<div className='createpost-status'>Status</div>
 				<div className='createpost-input'>
-					<img src={icon} alt='' />
+					<img src={user.avatar} alt='' />
 					<input
 						onChange={handleInputText}
 						value={inputText}
