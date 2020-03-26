@@ -22,7 +22,7 @@ const addFriend = (userId, friendId, token) => {
 };
 
 const deleteFriend = () => {
-	// return axios.post(`${url}/users/friends/remove`);
+	return axios.post(`${url}/users/friends/remove`);
 };
 
 const findFriendById = (userId, page, token) => {
