@@ -21,9 +21,9 @@ const addFriend = (userId, friendId, token) => {
 	);
 };
 
-// const deleteFriend = () => {
-// 	return axios.post(`${url}/users/friends/remove`);
-// };
+const deleteFriend = () => {
+	return axios.post(`${url}/users/friends/remove`);
+};
 
 const findFriendById = (userId, page, token) => {
 	return axios.get(`${url}/users/friends/byId`, {
